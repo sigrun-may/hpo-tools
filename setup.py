@@ -11,10 +11,7 @@ import setuptools
 
 project_name = "hpo_tools"
 source_code = "https://github.com/sigrun-may/hpo-tools"
-keywords = (
-    "optuna ml ai machine-learning experiment-tracking "
-    "hyperparameter-optimization"
-)
+keywords = "optuna ml ai machine-learning experiment-tracking " "hyperparameter-optimization"
 install_requires = ["optuna"]
 extras_require = {
     "checking": [
@@ -27,9 +24,9 @@ extras_require = {
         "pylint",
         "pylintfileheader",
     ],
-#    "optional": [],
+    #    "optional": [],
     "testing": ["pytest"],
-#    "doc": ["sphinx", "sphinx_rtd_theme", "myst_parser", "sphinx_copybutton"],
+    #    "doc": ["sphinx", "sphinx_rtd_theme", "myst_parser", "sphinx_copybutton"],
 }
 
 
@@ -58,10 +55,10 @@ setuptools.setup(
     url=source_code,
     project_urls={
         "Bug Tracker": source_code + "/issues",
-#        "Documentation": "",
+        #        "Documentation": "",
         "Source Code": source_code,
-#        "Contributing": source_code + "/blob/main/CONTRIBUTING.md",
-#        "Code of Conduct": source_code + "/blob/main/CODE_OF_CONDUCT.md",
+        #        "Contributing": source_code + "/blob/main/CONTRIBUTING.md",
+        #        "Code of Conduct": source_code + "/blob/main/CODE_OF_CONDUCT.md",
     },
     packages=setuptools.find_packages(),
     python_requires=">=3.6",
