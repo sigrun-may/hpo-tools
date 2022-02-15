@@ -1,6 +1,7 @@
 # HPO Tools
 
 ## Licensing
+
 Copyright (c) 2022 Sigrun May, [Ostfalia Hochschule für angewandte Wissenschaften](https://www.ostfalia.de/)<br/>
 Copyright (c) 2022 Philip May
 
