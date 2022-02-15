@@ -1,3 +1,7 @@
+# Copyright (c) 2022 Sigrun May, Ostfalia Hochschule für angewandte Wissenschaften
+# This software is distributed under the terms of the MIT license
+# which is available at https://opensource.org/licenses/MIT
+
 """Optuna study pruner."""
 
 import math
