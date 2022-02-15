@@ -1,3 +1,5 @@
+"""Optuna study pruner."""
+
 import math
 from itertools import combinations
 
@@ -8,19 +10,19 @@ epsilon = 1 / 1000
 
 
 def study_no_trial_completed_pruner(trial, warm_up_steps):
-
+    """TODO: add docstring."""
     # pruning of complete study
     if trial.number >= warm_up_steps:
         try:
             # check if any trial was completed and not pruned
             _ = trial.study.best_value
-        except:
+        except AttributeError:
             trial.study.stop()
             raise optuna.TrialPruned()
 
 
 def study_patience_pruner(trial, epsilon, warm_up_steps, patience):
-
+    """TODO: add docstring."""
     # pruning of complete study
     if trial.number >= warm_up_steps:
         evaluation_metrics_of_completed_trials = []
@@ -42,7 +44,7 @@ def study_patience_pruner(trial, epsilon, warm_up_steps, patience):
 
 
 def study_no_improvement_pruner(trial, epsilon, warm_up_steps, number_of_similar_best_values):
-
+    """TODO: add docstring."""
     study_no_trial_completed_pruner(trial, warm_up_steps)
 
     # pruning of complete study
