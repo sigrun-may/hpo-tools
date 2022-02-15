@@ -9,7 +9,7 @@ import os
 import setuptools
 
 
-project_name = "hpo-tools"
+project_name = "hpo_tools"
 source_code = "https://github.com/sigrun-may/hpo-tools"
 keywords = (
     "optuna ml ai machine-learning experiment-tracking "
