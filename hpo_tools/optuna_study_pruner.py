@@ -13,18 +13,6 @@ import optuna
 epsilon = 1 / 1000
 
 
-def study_no_trial_completed_pruner(trial, warm_up_steps):
-    """TODO: add docstring."""
-    # pruning of complete study
-    if trial.number >= warm_up_steps:
-        try:
-            # check if any trial was completed and not pruned
-            _ = trial.study.best_value
-        except AttributeError:
-            trial.study.stop()
-            raise optuna.TrialPruned()
-
-
 def study_patience_pruner(trial, epsilon, warm_up_steps, patience):
     """TODO: add docstring."""
     # pruning of complete study
@@ -47,12 +35,26 @@ def study_patience_pruner(trial, epsilon, warm_up_steps, patience):
                 raise optuna.TrialPruned()
 
 
-def study_no_improvement_pruner(trial, epsilon, warm_up_steps, number_of_similar_best_values):
+def study_no_improvement_pruner(trial, epsilon, warm_up_steps, number_of_similar_best_values, patience_for_unpruned_trials=None, threshold=None):
     """TODO: add docstring."""
-    study_no_trial_completed_pruner(trial, warm_up_steps)
 
-    # pruning of complete study
+    # stop study if no trial could be completed unitl patience_for_unpruned_trials
+    if patience_for_unpruned_trials and trial.number >= patience_for_unpruned_trials:
+        try:
+            # check if any trial was completed and not pruned
+            _ = trial.study.best_value
+        except AttributeError:
+            trial.study.stop()
+            raise optuna.TrialPruned()
+
+    # stop study if there is no improvement greater than epsilon
     if trial.number >= warm_up_steps:
+
+        # pruning only after reaching a given threshold to prevent pruning based on results of naive classifier
+        if threshold and (trial.study.StudyDirection.MAXIMIZE and trial.study.best_value < threshold) or (trial.study.StudyDirection.MINIMIZE and trial.study.best_value > threshold):
+            return  # abort pruning as the given threshold is not reached yet
+
+        # check if there is no improvement greater than epsilon
         evaluation_metrics_of_completed_trials = []
         for _trial in trial.study.trials:
             if _trial.state == optuna.trial.TrialState.COMPLETE:
