@@ -32,6 +32,7 @@ def study_patience_pruner(trial, epsilon, warm_up_steps, patience):
             # was best value of study before the number_of_similar_best_values?
             if best_value_before_patience + epsilon > best_value_within_patience:
                 trial.study.stop()
+                print("study stopped")
                 raise optuna.TrialPruned()
 
 
@@ -44,6 +45,7 @@ def study_no_improvement_pruner(trial, epsilon, warm_up_steps, number_of_similar
             # check if any trial was completed and not pruned
             _ = trial.study.best_value
         except AttributeError:
+            print("study stopped")
             trial.study.stop()
             raise optuna.TrialPruned()
 
@@ -51,7 +53,8 @@ def study_no_improvement_pruner(trial, epsilon, warm_up_steps, number_of_similar
     if trial.number >= warm_up_steps:
 
         # pruning only after reaching a given threshold to prevent pruning based on results of naive classifier
-        if threshold and (trial.study.StudyDirection.MAXIMIZE and trial.study.best_value < threshold) or (trial.study.StudyDirection.MINIMIZE and trial.study.best_value > threshold):
+        print(trial.study.direction)
+        if threshold and (trial.study.direction.StudyDirection.MAXIMIZE and trial.study.best_value < threshold) or (trial.study.direction.StudyDirection.MINIMIZE and trial.study.best_value > threshold):
             return  # abort pruning as the given threshold is not reached yet
 
         # check if there is no improvement greater than epsilon
@@ -73,5 +76,6 @@ def study_no_improvement_pruner(trial, epsilon, warm_up_steps, number_of_similar
                 print(evaluation_metrics_of_completed_trials[:number_of_similar_best_values])
                 print(evaluation_metrics_of_completed_trials)
                 print(trial.number)
+                print("study stopped")
                 trial.study.stop()
                 raise optuna.TrialPruned()
